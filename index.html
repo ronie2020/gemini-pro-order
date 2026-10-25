@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Pemesanan Produk VIP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0b1120; color: #e2e8f0; font-family: 'Inter', sans-serif; }
+        .card-bg { background-color: #111827; border: 1px solid #1f2937; }
+        .input-bg { background-color: #0b1120; border: 1px solid #374151; }
+        .input-bg:focus { border-color: #6366f1; outline: none; }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+
+    <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-8">
+            <h1 class="text-2xl font-bold text-white mb-2">Formulir Pemesanan Produk VIP</h1>
+            <p class="text-gray-400 text-sm">Pesanan diproses otomatis setelah verifikasi pembayaran.</p>
+        </div>
+
+        <form id="orderForm" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <div class="md:col-span-2 space-y-6">
+                <!-- 1. Pilih Produk -->
+                <div class="card-bg p-6 rounded-xl">
+                    <h2 class="text-indigo-400 font-semibold mb-4">1. PILIH PRODUK YANG INGIN DIPESAN</h2>
+                    <select id="produk" class="w-full input-bg text-white p-3 rounded-lg mb-4" disabled>
+                        <option value="Gemini AI Pro 18 Bulan">[PREMIUM_APP] GEMINI AI PRO 18 BULAN - Rp 85.000</option>
+                    </select>
+
+                    <div class="flex items-center justify-between input-bg p-4 rounded-lg mb-4">
+                        <div>
+                            <h3 class="font-bold text-white mt-1">GEMINI AI PRO 18 BULAN</h3>
+                            <p class="text-indigo-400 font-semibold">Rp 85.000</p>
+                        </div>
+                        <div class="flex items-center border border-gray-600 rounded-lg">
+                            <button type="button" onclick="updateQty(-1)" class="px-3 py-1 hover:bg-gray-700 rounded-l-lg">-</button>
+                            <input type="number" id="jumlah" value="1" min="1" class="w-12 text-center bg-transparent border-none text-white focus:outline-none" readonly>
+                            <button type="button" onclick="updateQty(1)" class="px-3 py-1 hover:bg-gray-700 rounded-r-lg">+</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Tata Cara Aktivasi (Baru Ditambahkan) -->
+                    <div class="bg-blue-900/30 border border-blue-700 p-4 rounded-lg mt-4">
+                        <h4 class="font-bold text-blue-300 mb-2 flex items-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Tata Cara Aktivasi Akun Gemini Pro:
+                        </h4>
+                        <ol class="list-decimal list-inside text-sm text-blue-100 space-y-1 ml-1">
+                            <li>Nanti akan diberikan <b>Link Aktivasi</b> melalui WA/Email setelah pembayaran dikonfirmasi.</li>
+                            <li>Silakan <b>klik link tersebut</b> untuk mengaktifkan.</li>
+                            <li><b>PENTING:</b> Pastikan pada saat mengklik link, akun Google yang sedang *login* di browser adalah <b>akun yang ingin diaktifkan</b> langganan Gemini Pro-nya.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- 2. Informasi Pemesan -->
+                <div class="card-bg p-6 rounded-xl">
+                    <h2 class="text-indigo-400 font-semibold mb-4">2. INFORMASI PEMESAN & KREDENSIAL</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm mb-2 text-gray-300">Nama Lengkap *</label>
+                            <input type="text" id="nama" required class="w-full input-bg text-white p-3 rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm mb-2 text-gray-300">Nomor WhatsApp Aktif *</label>
+                            <input type="tel" id="whatsapp" required placeholder="Contoh: 08123456789" class="w-full input-bg text-white p-3 rounded-lg">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm mb-2 text-gray-300">Email Aktif *</label>
+                            <input type="email" id="email" required class="w-full input-bg text-white p-3 rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm mb-2 text-gray-300">Kode Referal (Opsional)</label>
+                            <input type="text" id="kodeReferal" placeholder="Masukkan jika ada" class="w-full input-bg text-white p-3 rounded-lg">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm mb-2 text-gray-300">Catatan Pesanan (Opsional)</label>
+                        <textarea id="catatan" rows="2" class="w-full input-bg text-white p-3 rounded-lg"></textarea>
+                    </div>
+                </div>
+
+                <!-- 3. Metode Pembayaran -->
+                <div class="card-bg p-6 rounded-xl">
+                    <h2 class="text-indigo-400 font-semibold mb-4">3. METODE PEMBAYARAN & BUKTI TRANSFER</h2>
+                    
+                    <div class="bg-indigo-900/20 border border-indigo-500 p-4 rounded-lg mb-4">
+                        <p class="text-sm text-gray-300 mb-3">Silakan transfer sesuai <b>Total Tagihan</b> ke salah satu rekening berikut:</p>
+                        
+                        <div class="mb-2 p-3 bg-gray-800 rounded-lg">
+                            <span class="font-bold text-white text-lg">BCA: 2030497603</span>
+                            <p class="text-xs text-gray-400">a.n. Pemilik Rekening</p>
+                        </div>
+                        
+                        <div class="p-3 bg-gray-800 rounded-lg">
+                            <span class="font-bold text-white text-lg">BJB: 0080155352100</span>
+                            <p class="text-xs text-gray-400">a.n. Pemilik Rekening</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm mb-2 text-gray-300">Upload Bukti Transfer (Screenshot) *</label>
+                        <input type="file" id="buktiTransfer" accept="image/*" required class="w-full input-bg text-white p-2 rounded-lg cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Ringkasan & Checkout -->
+            <div class="md:col-span-1">
+                <div class="card-bg p-6 rounded-xl sticky top-4">
+                    <h3 class="font-bold text-white mb-4">Ringkasan Pembayaran</h3>
+                    <div class="flex justify-between text-sm text-gray-300 mb-2">
+                        <span>Harga (<span id="summaryQty">1</span>x)</span>
+                        <span id="summaryPrice">Rp 85.000</span>
+                    </div>
+                    <div class="flex justify-between text-lg font-bold text-white mb-6 pt-4 border-t border-gray-700">
+                        <span>Total Tagihan</span>
+                        <span id="totalTagihan" class="text-indigo-400">Rp 85.000</span>
+                    </div>
+
+                    <button type="submit" id="btnSubmit" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg transition">
+                        Konfirmasi & Bayar Sekarang
+                    </button>
+                    <!-- Notifikasi sukses diperbarui -->
+                    <div id="statusMsgContainer" class="mt-4 hidden p-3 rounded-lg border">
+                        <p id="statusMsg" class="text-center text-sm font-semibold"></p>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <script>
+        const HARGA_SATUAN = 85000;
+        let jumlah = 1;
+
+        function updateQty(change) {
+            let newQty = jumlah + change;
+            if(newQty >= 1 && newQty <= 10) {
+                jumlah = newQty;
+                document.getElementById('jumlah').value = jumlah;
+                document.getElementById('summaryQty').innerText = jumlah;
+                let total = jumlah * HARGA_SATUAN;
+                let formattedTotal = 'Rp ' + total.toLocaleString('id-ID');
+                document.getElementById('summaryPrice').innerText = formattedTotal;
+                document.getElementById('totalTagihan').innerText = formattedTotal;
+            }
+        }
+
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const btnSubmit = document.getElementById('btnSubmit');
+            const statusContainer = document.getElementById('statusMsgContainer');
+            const statusMsg = document.getElementById('statusMsg');
+            const urlGAS = 'https://script.google.com/macros/s/AKfycbwdqatFYtfFhoXfLHeZS4kmPBUTSgv_gRpWNKNdCiITolbSuBqJ3pyVQ1IhRudSyO6k2g/exec'; // <-- MASUKKAN URL APPS SCRIPT DI SINI
+
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = 'Mengupload Data & Foto...';
+            statusContainer.classList.add('hidden');
+
+            const fileInput = document.getElementById('buktiTransfer');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert("Harap upload bukti transfer!");
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = 'Konfirmasi & Bayar Sekarang';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const base64Data = event.target.result.split(',')[1];
+                
+                const data = {
+                    nama: document.getElementById('nama').value,
+                    whatsapp: document.getElementById('whatsapp').value,
+                    email: document.getElementById('email').value,
+                    produk: document.getElementById('produk').value,
+                    jumlah: document.getElementById('jumlah').value,
+                    totalTagihan: (document.getElementById('jumlah').value * HARGA_SATUAN),
+                    catatan: document.getElementById('catatan').value,
+                    metodePembayaran: "Transfer Bank",
+                    kodeReferal: document.getElementById('kodeReferal').value,
+                    buktiBase64: base64Data,
+                    buktiName: file.name,
+                    buktiMime: file.type
+                };
+
+                fetch(urlGAS, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                })
+                .then(() => {
+                    // Pesan sukses diubah sesuai permintaan
+                    statusContainer.classList.remove('hidden');
+                    statusContainer.className = "mt-4 p-3 rounded-lg border border-green-500 bg-green-900/20";
+                    statusMsg.innerHTML = "Pembayaran & Bukti Transfer Berhasil Terkirim!<br><br>Harap tunggu, Link Aktivasi sedang diproses.";
+                    statusMsg.className = "text-center text-sm text-green-400";
+                    
+                    btnSubmit.innerHTML = 'Berhasil ✔️';
+                    
+                    setTimeout(() => {
+                        document.getElementById('orderForm').reset();
+                        jumlah = 1; updateQty(0);
+                        btnSubmit.disabled = false;
+                        btnSubmit.innerHTML = 'Konfirmasi & Bayar Sekarang';
+                    }, 8000); // Waktu reset diperpanjang agar pembeli bisa membaca pesan
+                })
+                .catch(error => {
+                    statusContainer.classList.remove('hidden');
+                    statusContainer.className = "mt-4 p-3 rounded-lg border border-red-500 bg-red-900/20";
+                    statusMsg.innerText = "Terjadi kesalahan koneksi. Coba lagi.";
+                    statusMsg.className = "text-center text-sm text-red-400";
+                    
+                    btnSubmit.disabled = false;
+                    btnSubmit.innerHTML = 'Konfirmasi & Bayar Sekarang';
+                });
+            };
+            
+            reader.readAsDataURL(file);
+        });
+    </script>
+</body>
+</html>
