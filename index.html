@@ -3,21 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulir Pemesanan Produk VIP</title>
+    <title>Formulir Pemesanan Gemini Plus 12 Bulan - VIP</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #0b1120; color: #e2e8f0; font-family: 'Inter', sans-serif; }
         .card-bg { background-color: #111827; border: 1px solid #1f2937; }
         .input-bg { background-color: #0b1120; border: 1px solid #374151; }
         .input-bg:focus { border-color: #6366f1; outline: none; }
+        .highlight-glow {
+            box-shadow: 0 0 0 2px #6366f1, 0 0 25px rgba(99, 102, 241, 0.4);
+            border-color: #6366f1 !important;
+        }
+        /* Custom scrollbar */
+        .custom-scroll::-webkit-scrollbar { width: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #111827; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #374151; border-radius: 9999px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #4b5563; }
     </style>
 </head>
 <body class="min-h-screen p-4 md:p-8">
 
+    <!-- Modal Pemberitahuan & Syarat Ketentuan (Muncul Otomatis Saat Halaman Dibuka) -->
+    <div id="modalNotice" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md transition-opacity duration-300">
+        <div class="card-bg max-w-2xl w-full rounded-2xl shadow-2xl border border-gray-700 max-h-[92vh] flex flex-col overflow-hidden">
+            <!-- Modal Header -->
+            <div class="p-5 sm:p-6 border-b border-gray-800 bg-gradient-to-r from-amber-500/15 via-indigo-500/10 to-transparent flex items-start justify-between gap-4">
+                <div class="flex items-start gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center flex-shrink-0 text-xl border border-amber-500/30">
+                        📢
+                    </div>
+                    <div>
+                        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30 mb-1">
+                            <span>Pemberitahuan Promo Terkini</span>
+                        </div>
+                        <h2 class="text-xl sm:text-2xl font-bold text-white leading-tight">
+                            Promo Gemini Pro Telah Habis
+                        </h2>
+                    </div>
+                </div>
+                <button type="button" onclick="closeNoticeModal()" class="text-gray-400 hover:text-white p-1.5 rounded-lg hover:bg-gray-800 transition" title="Tutup">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+
+            <!-- Modal Content (Scrollable) -->
+            <div class="p-5 sm:p-6 overflow-y-auto space-y-4 text-sm text-gray-300 custom-scroll">
+                <!-- Info Pergantian Promo -->
+                <div class="p-4 rounded-xl bg-gradient-to-r from-amber-950/40 to-indigo-950/30 border border-amber-500/30">
+                    <p class="text-gray-200 leading-relaxed">
+                        Kami informasikan bahwa akun <b class="text-amber-400">Gemini Pro sudah habis masa promosinya</b>. 
+                        Saat ini tersedia promo alternatif yaitu <b class="text-indigo-400">Gemini Plus untuk 12 Bulan</b> dengan <b class="text-emerald-400 font-bold">harga yang sama (Rp 85.000)</b>!
+                    </p>
+                    <p class="text-xs text-gray-400 mt-2">
+                        Jika Anda bersedia melanjutkan pemesanan varian Gemini Plus 12 Bulan, silakan cermati seluruh Syarat & Ketentuan di bawah ini sebelum mengisi data pesanan.
+                    </p>
+                </div>
+
+                <!-- Box S&K Produk Lengkap -->
+                <div class="border border-gray-700/80 rounded-xl bg-gray-900/80 p-4 sm:p-5 space-y-4">
+                    <div class="border-b border-gray-800 pb-3">
+                        <div class="flex items-center justify-between flex-wrap gap-2">
+                            <h3 class="text-base font-bold text-white flex items-center gap-2">
+                                <span>📋</span> SYARAT & KETENTUAN PRODUCT
+                            </h3>
+                            <span class="text-xs font-semibold px-2.5 py-1 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                                S&K Varian: PLUS LINK REDEEM 12 BULAN
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Warning Baca Dulu Sebelum Klaim -->
+                    <div class="p-3.5 rounded-lg bg-red-950/40 border border-red-700/60 flex items-start gap-3">
+                        <span class="text-xl flex-shrink-0">⚠️</span>
+                        <div>
+                            <h4 class="font-bold text-red-300 text-sm">Baca Dulu Sebelum Klaim!</h4>
+                            <p class="text-xs text-red-200/90 mt-0.5">Mohon ikuti panduan berikut dengan teliti agar link aktivasi tidak hangus.</p>
+                        </div>
+                    </div>
+
+                    <!-- Poin 1: Sebelum Klik Link -->
+                    <div class="p-3.5 rounded-lg bg-gray-800/60 border border-gray-700/60 space-y-2">
+                        <h4 class="font-bold text-amber-300 text-sm flex items-center gap-2">
+                            <span>🔐</span> Sebelum Klik Link
+                        </h4>
+                        <ul class="list-disc list-inside space-y-1.5 text-xs text-gray-300 leading-relaxed pl-1">
+                            <li><span class="text-white font-medium">Pastikan sudah login</span> di Gmail yang memang mau dipakai untuk Gemini Plus.</li>
+                            <li><span class="text-amber-300 font-semibold">Hati-hati!</span> Walaupun hanya klik untuk cek tanpa niat klaim, <span class="text-white font-medium">link bisa langsung dianggap terpakai (used)</span>, terutama jika Gmail yang aktif pernah klaim/trial Gemini sebelumnya.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Poin 2: Syarat Akun -->
+                    <div class="p-3.5 rounded-lg bg-gray-800/60 border border-gray-700/60 space-y-2">
+                        <h4 class="font-bold text-emerald-300 text-sm flex items-center gap-2">
+                            <span>✅</span> Syarat Akun
+                        </h4>
+                        <ul class="list-disc list-inside space-y-1.5 text-xs text-gray-300 leading-relaxed pl-1">
+                            <li>Hanya untuk <span class="text-emerald-300 font-medium">akun baru atau yang belum pernah trial Gemini Plus/Pro</span>.</li>
+                            <li>Gmail <span class="text-white font-medium">belum pernah klaim promo Gemini dari XL atau Indosat</span>.</li>
+                            <li>Akun Google <span class="text-emerald-300 font-bold">wajib sudah memiliki metode pembayaran</span>.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Poin 3: Cara Tambah Metode Pembayaran -->
+                    <div class="p-3.5 rounded-lg bg-blue-950/30 border border-blue-800/40 space-y-2.5">
+                        <h4 class="font-bold text-blue-300 text-sm flex items-center gap-2">
+                            <span>💳</span> Cara Tambah Metode Pembayaran
+                        </h4>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            Jika Gmail belum memiliki metode pembayaran, tambahkan dulu e-wallet seperti <b>GoPay, DANA, ShopeePay</b>, atau pilihan lain yang tersedia melalui:
+                        </p>
+                        <div class="bg-gray-900/90 border border-blue-900/70 p-2.5 rounded-lg text-xs font-mono text-blue-200 flex items-center flex-wrap gap-1.5">
+                            <span class="bg-blue-900/40 px-2 py-0.5 rounded">Play Store</span>
+                            <span class="text-gray-500">→</span>
+                            <span class="bg-blue-900/40 px-2 py-0.5 rounded">Foto Profil</span>
+                            <span class="text-gray-500">→</span>
+                            <span class="bg-blue-900/40 px-2 py-0.5 rounded">Pembayaran & Langganan</span>
+                            <span class="text-gray-500">→</span>
+                            <span class="bg-amber-500/20 text-amber-300 font-bold px-2 py-0.5 rounded border border-amber-500/30">Metode Pembayaran</span>
+                        </div>
+                        <p class="text-xs text-amber-200/95 bg-amber-950/30 p-2 rounded border border-amber-800/40">
+                            <b>PENTING:</b> Pastikan Gmail di Play Store sama dengan Gmail yang akan dipakai klaim, lalu tambahkan metode pembayaran <b>SEBELUM</b> membuka link.
+                        </p>
+                    </div>
+
+                    <!-- Poin 4: Garansi -->
+                    <div class="p-3.5 rounded-lg bg-purple-950/30 border border-purple-800/40 space-y-2">
+                        <h4 class="font-bold text-purple-300 text-sm flex items-center gap-2">
+                            <span>🛡️</span> Garansi
+                        </h4>
+                        <ul class="list-disc list-inside space-y-1.5 text-xs text-gray-300 leading-relaxed pl-1">
+                            <li><span class="text-white font-medium">Garansi 24 jam</span> jika link berstatus <i>used</i>.</li>
+                            <li><span class="text-white font-medium">Wajib screen record</span> dari awal proses klaim, Gmail harus terlihat jelas.</li>
+                            <li><span class="text-red-400 font-bold bg-red-950/60 px-2.5 py-1 rounded border border-red-800/40 inline-block">No Record = No Garansi</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Checkbox Persetujuan -->
+                <label class="flex items-start gap-3 p-3.5 rounded-lg bg-gray-800/50 border border-gray-700/60 cursor-pointer hover:bg-gray-800/80 transition">
+                    <input type="checkbox" id="checkAgreeModal" class="mt-1 w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-gray-600 bg-gray-900">
+                    <span class="text-xs text-gray-300 leading-relaxed">
+                        Saya bersedia mengambil varian <b class="text-indigo-300">Gemini Plus 12 Bulan (Rp 85.000)</b> dan telah membaca, memahami, serta menyetujui seluruh <b class="text-white">Syarat & Ketentuan</b> di atas.
+                    </span>
+                </label>
+            </div>
+
+            <!-- Modal Footer / CTA -->
+            <div class="p-4 sm:p-5 border-t border-gray-800 bg-gray-900/90 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <button type="button" onclick="closeNoticeModal()" class="w-full sm:w-auto px-4 py-2.5 rounded-lg border border-gray-700 text-gray-400 hover:text-white hover:bg-gray-800 text-sm font-medium transition text-center">
+                    Tutup & Lihat Formulir
+                </button>
+                <button type="button" onclick="acceptAndScrollToForm()" class="w-full sm:w-auto px-6 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30">
+                    <span>Saya Bersedia, Lanjut ke Input Data</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
     <div class="max-w-4xl mx-auto">
-        <div class="text-center mb-8">
-            <h1 class="text-2xl font-bold text-white mb-2">Formulir Pemesanan Produk VIP</h1>
+        <!-- Header -->
+        <div class="text-center mb-6">
+            <h1 class="text-2xl sm:text-3xl font-bold text-white mb-2">Formulir Pemesanan Produk VIP</h1>
             <p class="text-gray-400 text-sm">Pesanan diproses otomatis setelah verifikasi pembayaran.</p>
+        </div>
+
+        <!-- Banner Pemberitahuan Promo Gemini Plus 12 Bulan -->
+        <div class="mb-6 p-4 rounded-xl card-bg border border-amber-500/40 bg-gradient-to-r from-amber-500/10 via-indigo-500/10 to-transparent flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div class="flex items-start gap-3">
+                <div class="text-2xl sm:text-3xl">📢</div>
+                <div>
+                    <div class="flex items-center gap-2 flex-wrap mb-1">
+                        <span class="text-xs font-semibold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">Update Promo</span>
+                        <h3 class="text-sm sm:text-base font-bold text-white">Promo Gemini Pro Sudah Habis</h3>
+                    </div>
+                    <p class="text-xs sm:text-sm text-gray-300">
+                        Saat ini tersedia promo <b class="text-indigo-400">Gemini Plus untuk 12 Bulan</b> dengan <b class="text-emerald-400">harga yang sama (Rp 85.000)</b>.
+                    </p>
+                </div>
+            </div>
+            <button type="button" onclick="openNoticeModal()" class="flex-shrink-0 text-xs px-3.5 py-2 rounded-lg bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 font-semibold transition flex items-center gap-1.5 self-end sm:self-center">
+                <span>📋 Baca Syarat & Ketentuan</span>
+            </button>
         </div>
 
         <form id="orderForm" class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -25,15 +193,23 @@
             <div class="md:col-span-2 space-y-6">
                 <!-- 1. Pilih Produk -->
                 <div class="card-bg p-6 rounded-xl">
-                    <h2 class="text-indigo-400 font-semibold mb-4">1. PILIH PRODUK YANG INGIN DIPESAN</h2>
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-indigo-400 font-semibold">1. PILIH PRODUK YANG INGIN DIPESAN</h2>
+                        <span class="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-medium">Stok Tersedia</span>
+                    </div>
+
                     <select id="produk" class="w-full input-bg text-white p-3 rounded-lg mb-4" disabled>
-                        <option value="Gemini AI Pro 18 Bulan">[PREMIUM_APP] GEMINI AI PRO 18 BULAN - Rp 85.000</option>
+                        <option value="Gemini Plus 12 Bulan">[PREMIUM_APP] GEMINI PLUS 12 BULAN - Rp 85.000</option>
                     </select>
 
                     <div class="flex items-center justify-between input-bg p-4 rounded-lg mb-4">
                         <div>
-                            <h3 class="font-bold text-white mt-1">GEMINI AI PRO 18 BULAN</h3>
-                            <p class="text-indigo-400 font-semibold">Rp 85.000</p>
+                            <div class="flex items-center gap-2">
+                                <h3 class="font-bold text-white mt-1">GEMINI PLUS 12 BULAN</h3>
+                                <span class="bg-indigo-500/20 text-indigo-300 text-xs px-2 py-0.5 rounded border border-indigo-500/30">Varian Baru</span>
+                            </div>
+                            <p class="text-indigo-400 font-semibold text-lg">Rp 85.000</p>
+                            <p class="text-xs text-amber-400 mt-0.5">Pengganti promo Gemini Pro (harga tetap sama)</p>
                         </div>
                         <div class="flex items-center border border-gray-600 rounded-lg">
                             <button type="button" onclick="updateQty(-1)" class="px-3 py-1 hover:bg-gray-700 rounded-l-lg">-</button>
@@ -42,27 +218,88 @@
                         </div>
                     </div>
                     
-                    <!-- Tata Cara Aktivasi (Baru Ditambahkan) -->
-                    <div class="bg-blue-900/30 border border-blue-700 p-4 rounded-lg mt-4">
-                        <h4 class="font-bold text-blue-300 mb-2 flex items-center">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            Tata Cara Aktivasi Akun Gemini Pro:
+                    <!-- Peringatan & Syarat Ketentuan Produk (Di dalam form) -->
+                    <div class="border border-gray-700 rounded-xl bg-gray-900/60 p-4 space-y-3 mt-4">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-bold text-white text-sm flex items-center gap-1.5">
+                                <span>📋</span> SYARAT & KETENTUAN PRODUCT
+                            </h4>
+                            <span class="text-[11px] text-indigo-300 bg-indigo-950/60 px-2 py-0.5 rounded border border-indigo-800/40">
+                                PLUS LINK REDEEM 12 BULAN
+                            </span>
+                        </div>
+
+                        <div class="p-3 bg-red-950/30 border border-red-700/50 rounded-lg text-xs text-red-200">
+                            <b>⚠️ Baca Dulu Sebelum Klaim!</b> Pastikan memahami poin berikut sebelum membuka link aktivasi:
+                        </div>
+
+                        <!-- Ringkasan Peringatan -->
+                        <div class="space-y-2 text-xs">
+                            <div class="p-2.5 rounded bg-gray-800/40 border border-gray-700/50">
+                                <span class="font-semibold text-amber-300">🔐 Sebelum Klik Link:</span>
+                                <ul class="list-disc list-inside text-gray-300 mt-1 space-y-1">
+                                    <li>Pastikan sudah login di Gmail yang memang mau dipakai untuk Gemini Plus.</li>
+                                    <li>Hati-hati! Walaupun hanya klik untuk cek tanpa niat klaim, link bisa langsung dianggap terpakai (used), terutama jika Gmail yang aktif pernah klaim/trial Gemini sebelumnya.</li>
+                                </ul>
+                            </div>
+
+                            <div class="p-2.5 rounded bg-gray-800/40 border border-gray-700/50">
+                                <span class="font-semibold text-emerald-300">✅ Syarat Akun:</span>
+                                <ul class="list-disc list-inside text-gray-300 mt-1 space-y-1">
+                                    <li>Hanya untuk akun baru atau yang belum pernah trial Gemini Plus/Pro.</li>
+                                    <li>Gmail belum pernah klaim promo Gemini dari XL atau Indosat.</li>
+                                    <li>Akun Google wajib sudah memiliki metode pembayaran.</li>
+                                </ul>
+                            </div>
+
+                            <div class="p-2.5 rounded bg-blue-950/20 border border-blue-800/30">
+                                <span class="font-semibold text-blue-300">💳 Cara Tambah Metode Pembayaran:</span>
+                                <p class="text-gray-300 mt-1">
+                                    Jika Gmail belum memiliki metode pembayaran, tambahkan dulu e-wallet (GoPay, DANA, ShopeePay, dll) melalui:
+                                </p>
+                                <p class="font-mono text-[11px] text-blue-200 bg-blue-950/60 p-1.5 rounded mt-1 border border-blue-900/50">
+                                    Play Store → Foto Profil → Pembayaran & Langganan → Metode Pembayaran
+                                </p>
+                                <p class="text-[11px] text-amber-300 mt-1">
+                                    Pastikan Gmail di Play Store sama dengan Gmail yang akan dipakai klaim, lalu tambahkan metode pembayaran SEBELUM membuka link.
+                                </p>
+                            </div>
+
+                            <div class="p-2.5 rounded bg-purple-950/20 border border-purple-800/30">
+                                <span class="font-semibold text-purple-300">🛡️ Garansi:</span>
+                                <ul class="list-disc list-inside text-gray-300 mt-1 space-y-1">
+                                    <li>Garansi 24 jam jika link berstatus used.</li>
+                                    <li>Wajib screen record dari awal proses klaim, Gmail harus terlihat jelas.</li>
+                                    <li><b class="text-red-400">No Record = No Garansi</b></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tata Cara Aktivasi Gemini Plus 12 Bulan -->
+                    <div class="bg-indigo-900/20 border border-indigo-700/50 p-4 rounded-lg mt-4">
+                        <h4 class="font-bold text-indigo-300 mb-2 flex items-center text-sm">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Tata Cara Aktivasi Gemini Plus 12 Bulan:
                         </h4>
-                        <ol class="list-decimal list-inside text-sm text-blue-100 space-y-1 ml-1">
-                            <li>Nanti akan diberikan <b>Link Aktivasi</b> melalui WA/Email setelah pembayaran dikonfirmasi.</li>
-                            <li>Silakan <b>klik link tersebut</b> untuk mengaktifkan.</li>
-                            <li><b>PENTING:</b> Pastikan pada saat mengklik link, akun Google yang sedang *login* di browser adalah <b>akun yang ingin diaktifkan</b> langganan Gemini Pro-nya.</li>
+                        <ol class="list-decimal list-inside text-xs text-indigo-100 space-y-1 ml-1 leading-relaxed">
+                            <li>Nanti akan diberikan <b>Link Aktivasi (Redeem)</b> melalui WhatsApp/Email setelah pembayaran diverifikasi.</li>
+                            <li>Pastikan metode pembayaran di akun Google sudah terpasang terlebih dahulu.</li>
+                            <li>Buka link redeem pada browser dengan akun Gmail yang sudah dipersiapkan.</li>
                         </ol>
                     </div>
                 </div>
 
                 <!-- 2. Informasi Pemesan -->
-                <div class="card-bg p-6 rounded-xl">
-                    <h2 class="text-indigo-400 font-semibold mb-4">2. INFORMASI PEMESAN & KREDENSIAL</h2>
+                <div id="section-informasi-pemesan" class="card-bg p-6 rounded-xl transition-all duration-500">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-indigo-400 font-semibold">2. INFORMASI PEMESAN & KREDENSIAL</h2>
+                        <span class="text-xs text-gray-400">* Wajib diisi</span>
+                    </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div>
                             <label class="block text-sm mb-2 text-gray-300">Nama Lengkap *</label>
-                            <input type="text" id="nama" required class="w-full input-bg text-white p-3 rounded-lg">
+                            <input type="text" id="nama" required placeholder="Masukkan nama lengkap Anda" class="w-full input-bg text-white p-3 rounded-lg">
                         </div>
                         <div>
                             <label class="block text-sm mb-2 text-gray-300">Nomor WhatsApp Aktif *</label>
@@ -71,8 +308,8 @@
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div>
-                            <label class="block text-sm mb-2 text-gray-300">Email Aktif *</label>
-                            <input type="email" id="email" required class="w-full input-bg text-white p-3 rounded-lg">
+                            <label class="block text-sm mb-2 text-gray-300">Email Aktif (Untuk Pengiriman Link) *</label>
+                            <input type="email" id="email" required placeholder="contoh@gmail.com" class="w-full input-bg text-white p-3 rounded-lg">
                         </div>
                         <div>
                             <label class="block text-sm mb-2 text-gray-300">Kode Referal (Opsional)</label>
@@ -81,7 +318,7 @@
                     </div>
                     <div>
                         <label class="block text-sm mb-2 text-gray-300">Catatan Pesanan (Opsional)</label>
-                        <textarea id="catatan" rows="2" class="w-full input-bg text-white p-3 rounded-lg"></textarea>
+                        <textarea id="catatan" rows="2" placeholder="Catatan tambahan bila ada..." class="w-full input-bg text-white p-3 rounded-lg"></textarea>
                     </div>
                 </div>
 
@@ -92,14 +329,20 @@
                     <div class="bg-indigo-900/20 border border-indigo-500 p-4 rounded-lg mb-4">
                         <p class="text-sm text-gray-300 mb-3">Silakan transfer sesuai <b>Total Tagihan</b> ke salah satu rekening berikut:</p>
                         
-                        <div class="mb-2 p-3 bg-gray-800 rounded-lg">
-                            <span class="font-bold text-white text-lg">BCA: 2030497603</span>
-                            <p class="text-xs text-gray-400">a.n. Pemilik Rekening</p>
+                        <div class="mb-2 p-3 bg-gray-800 rounded-lg flex items-center justify-between">
+                            <div>
+                                <span class="font-bold text-white text-lg">BCA: 2030497603</span>
+                                <p class="text-xs text-gray-400">a.n. Pemilik Rekening</p>
+                            </div>
+                            <button type="button" onclick="navigator.clipboard.writeText('2030497603'); alert('Nomor rekening BCA disalin!');" class="text-xs bg-gray-700 hover:bg-gray-600 text-gray-200 px-3 py-1.5 rounded transition">Salin</button>
                         </div>
                         
-                        <div class="p-3 bg-gray-800 rounded-lg">
-                            <span class="font-bold text-white text-lg">BJB: 0080155352100</span>
-                            <p class="text-xs text-gray-400">a.n. Pemilik Rekening</p>
+                        <div class="p-3 bg-gray-800 rounded-lg flex items-center justify-between">
+                            <div>
+                                <span class="font-bold text-white text-lg">BJB: 0080155352100</span>
+                                <p class="text-xs text-gray-400">a.n. Pemilik Rekening</p>
+                            </div>
+                            <button type="button" onclick="navigator.clipboard.writeText('0080155352100'); alert('Nomor rekening BJB disalin!');" class="text-xs bg-gray-700 hover:bg-gray-600 text-gray-200 px-3 py-1.5 rounded transition">Salin</button>
                         </div>
                     </div>
 
@@ -124,12 +367,19 @@
                         <span id="totalTagihan" class="text-indigo-400">Rp 85.000</span>
                     </div>
 
-                    <button type="submit" id="btnSubmit" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg transition">
+                    <button type="submit" id="btnSubmit" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg transition shadow-lg shadow-indigo-500/20">
                         Konfirmasi & Bayar Sekarang
                     </button>
-                    <!-- Notifikasi sukses diperbarui -->
+                    
+                    <!-- Notifikasi status -->
                     <div id="statusMsgContainer" class="mt-4 hidden p-3 rounded-lg border">
                         <p id="statusMsg" class="text-center text-sm font-semibold"></p>
+                    </div>
+
+                    <div class="mt-4 pt-4 border-t border-gray-800 text-center">
+                        <button type="button" onclick="openNoticeModal()" class="text-xs text-gray-400 hover:text-indigo-400 transition underline">
+                            Lihat Syarat & Ketentuan Lengkap
+                        </button>
                     </div>
                 </div>
             </div>
@@ -140,6 +390,53 @@
     <script>
         const HARGA_SATUAN = 85000;
         let jumlah = 1;
+
+        function openNoticeModal() {
+            const modal = document.getElementById('modalNotice');
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closeNoticeModal() {
+            const modal = document.getElementById('modalNotice');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function acceptAndScrollToForm() {
+            closeNoticeModal();
+            const agreeBox = document.getElementById('checkAgreeModal');
+            if (agreeBox) agreeBox.checked = true;
+
+            const section = document.getElementById('section-informasi-pemesan');
+            const inputNama = document.getElementById('nama');
+
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                section.classList.add('highlight-glow');
+                setTimeout(() => {
+                    section.classList.remove('highlight-glow');
+                }, 3000);
+            }
+
+            setTimeout(() => {
+                if (inputNama) {
+                    inputNama.focus();
+                }
+            }, 600);
+        }
+
+        // Tutup modal jika user klik area gelap luar modal
+        document.getElementById('modalNotice').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeNoticeModal();
+            }
+        });
+
+        // Tutup modal dengan tombol Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeNoticeModal();
+            }
+        });
 
         function updateQty(change) {
             let newQty = jumlah + change;
@@ -160,7 +457,7 @@
             const btnSubmit = document.getElementById('btnSubmit');
             const statusContainer = document.getElementById('statusMsgContainer');
             const statusMsg = document.getElementById('statusMsg');
-            const urlGAS = 'https://script.google.com/macros/s/AKfycbwdqatFYtfFhoXfLHeZS4kmPBUTSgv_gRpWNKNdCiITolbSuBqJ3pyVQ1IhRudSyO6k2g/exec'; // <-- MASUKKAN URL APPS SCRIPT DI SINI
+            const urlGAS = 'https://script.google.com/macros/s/AKfycbwdqatFYtfFhoXfLHeZS4kmPBUTSgv_gRpWNKNdCiITolbSuBqJ3pyVQ1IhRudSyO6k2g/exec';
 
             btnSubmit.disabled = true;
             btnSubmit.innerHTML = 'Mengupload Data & Foto...';
@@ -202,7 +499,6 @@
                     body: JSON.stringify(data)
                 })
                 .then(() => {
-                    // Pesan sukses diubah sesuai permintaan
                     statusContainer.classList.remove('hidden');
                     statusContainer.className = "mt-4 p-3 rounded-lg border border-green-500 bg-green-900/20";
                     statusMsg.innerHTML = "Pembayaran & Bukti Transfer Berhasil Terkirim!<br><br>Harap tunggu, Link Aktivasi sedang diproses.";
@@ -215,7 +511,7 @@
                         jumlah = 1; updateQty(0);
                         btnSubmit.disabled = false;
                         btnSubmit.innerHTML = 'Konfirmasi & Bayar Sekarang';
-                    }, 8000); // Waktu reset diperpanjang agar pembeli bisa membaca pesan
+                    }, 8000);
                 })
                 .catch(error => {
                     statusContainer.classList.remove('hidden');
